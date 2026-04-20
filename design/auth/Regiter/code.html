@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#00B14F",
+              "on-surface": "#191c1b",
+              "surface-container-lowest": "#ffffff",
+              "background": "#ffffff",
+              "outline": "#e5e7eb"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        body {
+            background-color: #ffffff;
+            font-family: 'Manrope', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#00B14F 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body class="flex items-start justify-center min-h-screen">
+<!-- Mobile Screen Wrapper: Fixed Height 884px, Full Bleed -->
+<main class="relative w-full max-w-[414px] h-[884px] bg-background overflow-hidden flex flex-col">
+<!-- Background Elements - Full Bleed -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-pattern -rotate-12 translate-x-16 -translate-y-16 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-pattern rotate-12 -translate-x-16 translate-y-16 pointer-events-none"></div>
+<!-- Header -->
+<header class="flex items-center px-4 h-14 w-full z-10">
+<button class="p-2 hover:bg-zinc-100 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface" data-icon="arrow_back">arrow_back</span>
+</button>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto px-6 flex flex-col items-center relative z-10">
+<!-- Logo & Welcome -->
+<div class="mt-4 mb-6 flex flex-col items-center">
+<div class="flex items-center gap-1 mb-2">
+<span class="text-[40px] font-black tracking-tighter text-[#2e3130]">top</span>
+<div class="relative">
+<span class="text-[40px] font-black tracking-tighter text-[#00B14F]">cv</span>
+<div class="absolute -bottom-1 left-0 w-full h-1 bg-[#2e3130] rounded-full"></div>
+</div>
+<span class="text-[8px] font-bold align-top ml-0.5 mb-6 text-[#2e3130]">®</span>
+</div>
+<p class="font-bold text-[#1a1a1a] text-xl">Chào mừng bạn đến với TopCV</p>
+</div>
+<h2 class="text-[22px] font-bold text-[#1a1a1a] mb-6">Đăng ký tài khoản</h2>
+<!-- Registration Form -->
+<form class="w-full space-y-4" onsubmit="event.preventDefault()">
+<!-- Full Name -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400">person</span>
+<input class="w-full h-14 pl-12 pr-4 bg-white border border-zinc-200 rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-zinc-400" placeholder="Họ và tên" type="text"/>
+</div>
+<!-- Email -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400">mail</span>
+<input class="w-full h-14 pl-12 pr-4 bg-white border border-zinc-200 rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-zinc-400" placeholder="Email" type="email"/>
+</div>
+<!-- Password -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400">lock</span>
+<input class="w-full h-14 pl-12 pr-12 bg-white border border-zinc-200 rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-zinc-400" placeholder="Mật khẩu" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+<!-- Re-enter Password -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400">lock</span>
+<input class="w-full h-14 pl-12 pr-12 bg-white border border-zinc-200 rounded-full text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-zinc-400" placeholder="Nhập lại mật khẩu" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+<!-- Terms -->
+<div class="flex items-start gap-3 pt-2">
+<input class="w-5 h-5 mt-0.5 rounded border-zinc-300 text-primary focus:ring-primary" type="checkbox"/>
+<p class="text-sm leading-snug text-zinc-600">
+                        Tôi đã đọc và đồng ý với <a class="text-primary hover:underline" href="#">Điều khoản dịch vụ</a> và <a class="text-primary hover:underline" href="#">Chính sách bảo mật</a> của TopCV.
+                    </p>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-14 mt-4 bg-[#00B14F] text-white font-bold rounded-full hover:bg-[#009e46] transition-colors active:scale-[0.98]" type="submit">
+                    Đăng ký
+                </button>
+</form>
+<!-- Footer Section -->
+<div class="w-full mt-10 space-y-6 flex flex-col items-center">
+<p class="text-sm font-semibold text-zinc-800">
+                    Bạn đã có tài khoản? 
+                    <a class="text-primary hover:underline" href="#">Đăng nhập ngay</a>
+</p>
+<div class="w-2/3 h-[1px] bg-zinc-100"></div>
+<button class="text-primary font-bold text-sm hover:underline py-2 mb-8">
+                    Trải nghiệm không cần đăng nhập
+                </button>
+</div>
+</div>
+</main>
+</body></html>

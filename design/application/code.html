@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Application - Ứng tuyển</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'topcv-green': '#00B14F',
+            'topcv-bg': '#F4F7F6',
+            'topcv-gray': '#F2F4F7',
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles -->
+<style data-purpose="layout">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #ffffff;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Hide scrollbar for cleaner look */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+<style data-purpose="form-elements">
+    /* Custom radio button styling */
+    .custom-radio {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #D1D5DB;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .custom-radio:checked {
+      border-color: #00B14F;
+    }
+    .custom-radio:checked::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: #00B14F;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Custom checkbox styling */
+    .custom-checkbox {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #D1D5DB;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .custom-checkbox:checked {
+      background-color: #00B14F;
+      border-color: #00B14F;
+    }
+    .custom-checkbox:checked::after {
+      content: '✓';
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen flex flex-col">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+<button aria-label="Go back" class="p-1">
+<svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<h1 class="text-lg font-bold text-gray-800">Ứng tuyển</h1>
+<div class="w-8"></div> <!-- Spacer for centering -->
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: ContentArea -->
+<main class="flex-1 overflow-y-auto px-4 py-6 pb-32">
+<!-- BEGIN: CVSelection -->
+<section class="mb-6" data-purpose="cv-selection-section">
+<h2 class="text-base font-bold text-gray-800 mb-3">CV ứng tuyển</h2>
+<!-- Option 1: CV from Library -->
+<div class="border-2 border-topcv-green rounded-lg p-4 mb-3 bg-green-50/10">
+<div class="flex items-center gap-3 mb-4 cursor-pointer">
+<input checked="" class="custom-radio" name="cv_source" type="radio"/>
+<span class="font-semibold text-gray-800">CV từ thư viện của tôi</span>
+</div>
+<div class="border border-gray-200 rounded-lg p-3 flex items-center justify-between bg-white w-full cursor-pointer hover:bg-gray-50 transition-colors">
+<div>
+<p class="text-gray-800 font-medium">Back-end Developer</p>
+<p class="text-gray-400 text-xs mt-1">Cập nhật lần cuối: 19/01/2026</p>
+</div>
+<svg class="h-6 w-6 text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+<!-- Option 2: Upload from Phone -->
+<div class="border border-gray-200 rounded-lg p-4">
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="custom-radio" name="cv_source" type="radio"/>
+<span class="font-semibold text-gray-800">Tải CV lên từ điện thoại</span>
+</label>
+</div>
+</section>
+<!-- END: CVSelection -->
+<!-- BEGIN: DesiredLocation -->
+<section class="mb-6" data-purpose="location-section">
+<label class="block text-base font-bold text-gray-800 mb-3">
+        Địa điểm làm việc mong muốn <span class="text-red-500">*</span>
+</label>
+<div class="border border-gray-200 rounded-lg p-3 min-h-[56px] flex items-center">
+<!-- Location Tag -->
+<div class="bg-gray-100 rounded-full px-3 py-1 flex items-center gap-2">
+<span class="text-sm text-gray-700">Hải Phòng</span>
+<button class="text-gray-500 hover:text-gray-700">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</section>
+<!-- END: DesiredLocation -->
+<!-- BEGIN: CoverLetter -->
+<section class="mb-6" data-purpose="cover-letter-section">
+<label class="block text-base font-bold text-gray-800 mb-3">Thư giới thiệu</label>
+<textarea class="w-full border border-gray-200 rounded-lg p-4 text-sm text-gray-700 focus:ring-topcv-green focus:border-topcv-green min-h-[140px]" placeholder="Viết giới thiệu ngắn gọn về bản thân (điểm mạnh, điểm yếu) và nêu rõ mong muốn, lý do làm việc tại công ty này"></textarea>
+</section>
+<!-- END: CoverLetter -->
+<!-- BEGIN: WarningNotes -->
+<section class="mb-8" data-purpose="notes-section">
+<h3 class="text-base font-bold text-gray-800 mb-4">Lưu ý</h3>
+<div class="space-y-4 text-sm text-gray-700 leading-relaxed">
+<div class="flex gap-2">
+<span>1.</span>
+<p>
+            TopCV khuyên tất cả các bạn hãy luôn cẩn trọng trong quá trình tìm việc và chủ động nghiên cứu về thông tin công ty, vị trí việc làm trước khi ứng tuyển. Ứng viên cần có trách nhiệm với hành vi ứng tuyển của mình. Nếu bạn gặp phải tin tuyển dụng hoặc nhận được liên lạc đáng ngờ của nhà tuyển dụng, hãy báo cáo ngay cho TopCV qua email <a class="text-topcv-green underline" href="mailto:hotro@topcv.vn">hotro@topcv.vn</a> để được hỗ trợ kịp thời.
+          </p>
+</div>
+<div class="flex gap-2">
+<span>2.</span>
+<p>
+            Tìm hiểu thêm kinh nghiệm phòng tránh lừa đảo <a class="text-topcv-green underline" href="#">tại đây</a>.
+          </p>
+</div>
+</div>
+</section>
+<!-- END: WarningNotes -->
+<!-- BEGIN: TermsAgreement -->
+<section class="mb-10" data-purpose="terms-agreement">
+<label class="flex items-start gap-3 cursor-pointer">
+<input class="custom-checkbox mt-0.5" id="terms-checkbox" type="checkbox"/>
+<span class="text-sm text-gray-700">
+          Tôi đã đọc và đồng ý với <a class="text-topcv-green" href="#">Thoả thuận sử dụng dữ liệu cá nhân</a> giữa tôi và Nhà tuyển dụng.
+        </span>
+</label>
+</section>
+<!-- END: TermsAgreement -->
+</main>
+<!-- END: ContentArea -->
+<!-- BEGIN: BottomAction -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 max-w-md mx-auto">
+<button class="w-full bg-topcv-green text-white font-bold py-3.5 rounded-lg active:opacity-90 transition-opacity" data-purpose="submit-application">
+      Ứng tuyển
+    </button>
+<!-- iOS Home Indicator Space -->
+<div class="h-6 w-full flex justify-center items-center mt-2">
+<div class="w-32 h-1.5 bg-black rounded-full"></div>
+</div>
+</footer>
+<!-- END: BottomAction -->
+</body></html>

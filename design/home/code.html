@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TopCV Mobile UI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#00B14F',
+            secondary: '#F4F7F6',
+            accent: '#E6F7ED',
+            'mint-light': '#F1FAF5',
+          },
+          fontFamily: {
+            manrope: ['Manrope', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layouts">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .safe-area-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    /* Custom scrollbar hiding for horizontal icons */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .job-card-border {
+      border: 1px solid #00B14F;
+    }
+    .font-manrope {
+      font-family: 'Manrope', sans-serif;
+    }
+    .header-gradient {
+      background: linear-gradient(180deg, #00B14F 0%, #00B14F 70%, rgba(255, 255, 255, 0) 95%);
+    }
+  </style>
+</head>
+<body class="max-w-md mx-auto bg-gray-50 min-h-screen flex flex-col">
+<!-- BEGIN: Header Section -->
+<header class="header-gradient pt-10 pb-8 px-4 sticky top-0 z-50" data-purpose="main-header">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center space-x-2">
+<!-- Robot Icon Placeholder -->
+<div class="w-10 h-10 bg-white rounded-full flex items-center justify-center overflow-hidden">
+<img alt="Bot Icon" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFIMD-bj0CEWFPV9HkfhmmKWuBAhgPAclX0g-lfag1-FWGuemj4DqzwCVqoa2sagvFth1LTXB-UwkOSWdhkH9kRMCfEbz_F-T4i34tzBAsRfm_SbKSkye8TlAGWAbFjdjY3a4TvbprRWkTanN24M9glZ7n31nXnM_aPswkS18jRv75WYLXwiIbwEgn5Y3AA4rpy3mVRfS-v62omy50DvQUn9qW3292XLDSG8UnaXo2mIsWvMbqswRV_ud55Z-UXiLld0ZZFbpJUQ" style=""/>
+</div>
+<span class="text-white font-bold text-lg" style="">TopCV</span>
+</div>
+<div class="flex space-x-3 text-white">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="relative shadow-[0_10px_20px_-5px_rgba(59,130,246,0.25)] rounded-xl">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input class="block w-full pl-10 pr-3 border border-transparent leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-white sm:text-sm py-3 rounded-xl" placeholder="Tìm kiếm theo công ty" type="text"/>
+</div>
+</header>
+<!-- END: Header Section -->
+<main class="flex-grow pb-24 -mt-4">
+<!-- BEGIN: Quick Categories -->
+<section class="px-4 py-6 overflow-x-auto no-scrollbar flex space-x-6 bg-transparent" data-purpose="categories-navigation">
+<div class="flex flex-col items-center min-w-[60px]">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm border border-gray-100 overflow-hidden">
+<img alt="Việc làm" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy51sPsUsGgoeUK3aqEJ2gfImt77rBnfu-tTR9CnIPDKaSHNsa0fBRVkgT7KHSqe09a57DxGnOIKMD8Rd4wVK8sCOwU5eRp2a1R2wLFdB7P6Uv4MRfFL_v4srmpO1F9QZEhQMYUij9paQvaUmrtbNfRVQx1k19xFThspW4t7C9d-O7sPptnv5-Mf1zI2GtW44yIrlRRm50E5id3wY_HhndY_3WvSesWqQLIafXkPg-OuO-3Bt74MaR8_Scu4Gz5eCxGHQAdHvr9w" style=""/>
+</div>
+<span class="text-xs font-medium text-gray-700" style="">Việc làm</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px]">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm border border-gray-100 overflow-hidden">
+<img alt="TopCV Pro" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUAzA0uYoEPyub2Y7KsXAKyFul2LtYorrB4wdpoWxAFnPmmq2rgjZi4pe2k6-wdxvBTtNizqHLL-eQJ85ZeIWs_Syt6J3ABRkGicO6IoSYNzp9GQ7uR13x0tE7x5AL81V-FSbfOuVus-3d49jNLFVYCXgcrfPGlyP5PkJc60d4SAB0Z0IrxvWny-4t7irudb75jLZa4GVmv9HVsfL8kDrP24fUfxyA7EuRO_5PgWInQKXtcZO_WReOa_IAqOKW_vDkm_jDrokEsA" style=""/>
+</div>
+<span class="text-xs font-medium text-gray-700 whitespace-nowrap" style="">TopCV Pro</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px]">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm border border-gray-100 overflow-hidden">
+<img alt="Tạo CV" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNoJb1Lbl3PoTZGL4wi_KqaoyO30Z43WAqA3d79oUaSoAt2OD_7NolRU7mRB-L-hGMdIxsBUtSLk3nRuhI1RZXQjlK9s-DZVhEN6qudJCvUQF-iaV-vEgUyoYHuJR5kTvmarWD8R7W3Cnao1XbbrY6-nw8t794JgHFnibSUlVfbplDlmaVIN7ac3NjY0XBhJG1pNFmqaOhQIkGomNVhOwEp-qiPj15fHPlrd7cxspNU-J8l-Op8LWRZTdqr71RfUQX9TWhsj3lVQ" style=""/>
+</div>
+<span class="text-xs font-medium text-gray-700 whitespace-nowrap" style="">Tạo CV</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px]">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm border border-gray-100 overflow-hidden">
+<img alt="Công cụ" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCObqkXjPqYPx6SsM3zyI_Sj4gqJCGNMzN0B2X8jrOOFO9jxds5LAIA_RCNRYpCIA7bO8m7WBoLen4LDI2NRD5cReA-bsXbnaJ_R5QDvea27g-BHQj0F1kRulHDt3elwPm-xy8gTOI303HTVoOPIwS-OJ1tYEOZwkBC68RORfZMuNVSlUqte4p8cxS1lFejjH0264ZBZeNr9Fnain9hNJKXtvgLcM_tWiPflGJEIEOIIoDdxSXpysr_tAVkgXksoOudh_12Em4FvQ" style=""/>
+</div>
+<span class="text-xs font-medium text-gray-700" style="">Công cụ</span>
+</div>
+<div class="flex flex-col items-center min-w-[60px]">
+<div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm border border-gray-100 overflow-hidden">
+<img alt="Blog" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSPCyps3AtZolwc5H1w5W0LHniXmXcZxoE9G__46JLOQUDR2Um1DRS_Fs28jE0zpFWsYBCk32nwhtrGFZJ5Xc7-fMhrXDC93-bU3v22VmlQzI_2xWTigTJSXXt5XaH31gfOdfxzXc5BS8OsPGX5RdZ05nJoSL6_kay7bsUyqcOlHeongatS4HT6UW0pnZtexgP0MX-NbEpVosh20ahc1aRAFtxSUAzIwD-RAPfYYsVmkFWIridlELjar3megAppTzBbbeD6_5OA" style=""/>
+</div>
+<span class="text-xs font-medium text-gray-700" style="">Blog</span>
+</div>
+</section>
+<!-- END: Quick Categories -->
+<!-- BEGIN: Discover Banner -->
+<section class="px-4 py-4" data-purpose="discover-banner">
+<button class="w-full flex items-center justify-center space-x-2 py-3 border-2 border-primary rounded-full text-primary font-semibold hover:bg-emerald-50 transition-colors" style="">
+<svg class="h-5 w-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path>
+</svg>
+<span class="" style="">Khám phá việc làm gần bạn</span>
+</button>
+</section>
+<!-- END: Discover Banner -->
+<!-- BEGIN: Suggested Jobs Section -->
+<section class="px-4 mt-4" data-purpose="suggested-jobs">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-gray-800" style="">Gợi ý việc làm phù hợp</h2>
+<a class="text-primary font-medium text-base" href="#" style="">Xem tất cả</a>
+</div>
+<!-- Info Banner -->
+<div class="bg-blue-50 border-l-4 border-blue-400 p-3 mb-4 rounded flex items-center justify-between">
+<div class="flex items-center">
+<svg class="h-5 w-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-xs text-blue-700" style="">Vuốt trái để bỏ việc làm không phù hợp</span>
+</div>
+<button class="text-blue-400" style="">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Job Card 1 -->
+<article class="bg-mint-light rounded-xl p-4 shadow-sm mb-4 border border-primary relative font-manrope" data-purpose="job-card">
+<div class="flex space-x-4">
+<div class="w-16 h-16 flex-shrink-0 border border-gray-100 rounded-lg p-1 bg-white">
+<img alt="Company Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlQEQyyCVvewc5XBerJxm8L7PH4U5srtV7vgsa0HZKCWRx1kwbTAkign9-6XuKzBKkuNunzz-eakN0Ganep06kRUwabg6HjQdhPkdGwSC7yPIglD_judE1Ti0-thqRD8iMwbMQjKwHJdxUG7YhTNjZPh4Go8iy3YgrEx_qov1BaT7lRdc47oU-6hDHiX8jRQ4qsXay6Q2K5mUXqs-m7h03JODVPhCZ5tVSHCMW_h23WcSmplX0Zl_8sjY1x9Ty7iKvBju_dcb4tA" style=""/>
+</div>
+<div class="flex-grow">
+<h3 class="text-sm font-bold text-gray-900 leading-tight" style="">Kế Toán Trưởng - 2 Năm Kinh Nghiệm - Tại Hải Phòng</h3>
+<p class="text-xs text-gray-500 mt-1 uppercase" style="">CÔNG TY TNHH TÂN HƯNG THỊNH HO...</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex space-x-2">
+<span class="bg-emerald-50 text-primary text-xs font-bold px-3 py-1.5 rounded border border-emerald-100 font-manrope" style="">
+<span class="mr-1" style="">$</span>Thoả thuận
+            </span>
+<span class="bg-gray-100 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded font-manrope" style="">Hải Phòng (mới)</span>
+</div>
+<button class="text-gray-400 p-1" style="">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</article>
+<!-- Job Card 2 -->
+<article class="bg-mint-light rounded-xl p-4 shadow-sm mb-4 border border-primary relative font-manrope" data-purpose="job-card">
+<div class="flex space-x-4">
+<div class="w-16 h-16 flex-shrink-0 border border-gray-100 rounded-lg p-1 bg-white">
+<img alt="Company Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo69ucKKu232WzRj3m1SosS28lEprfyrjGcsNNKV8i-WA9UlvmrzfSPX3eabgM9-AcBR0NVb8pEnBswpuUOJOsTdkhriMD_z4sQ3mjCOzK2GssaMn2S13mgpugMtssKLjZOgDFsQDM8GkGuXbXvBhHItjvkttb_qkqp7VEQc0sjo2bY8XgE-dGSa3dy1nGRoCP2A550v1VHUzUh_PHXczD0zTU1qJZygn4YvvAK0jH8sS18HXSWuzYWK68hyuBG0t5yucsK6R87g" style=""/>
+</div>
+<div class="flex-grow">
+<h3 class="text-sm font-bold text-gray-900 leading-tight" style="">Kế Toán Trưởng</h3>
+<p class="text-xs text-gray-500 mt-1 uppercase" style="">CÔNG TY TNHH GLOBAL HI-TEK PRECI...</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex space-x-2">
+<span class="bg-emerald-50 text-primary text-xs font-bold px-3 py-1.5 rounded border border-emerald-100 font-manrope" style="">45 - 50 triệu</span>
+<span class="bg-gray-100 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded font-manrope" style="">Hải Phòng (mới)</span>
+</div>
+<button class="text-gray-400 p-1" style="">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</article>
+</section>
+<!-- END: Suggested Jobs Section -->
+<!-- BEGIN: Best Jobs Highlighted Section -->
+<section class="px-4 mt-8" data-purpose="best-jobs">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-gray-800" style="">Việc làm tốt nhất</h2>
+<a class="text-primary font-medium text-base" href="#" style="">Xem tất cả</a>
+</div>
+<!-- Best Job Card 1 (Highlighted Border) -->
+<article class="bg-mint-light rounded-xl p-4 shadow-sm mb-4 border border-primary relative font-manrope" data-purpose="job-card-featured">
+<div class="flex space-x-4">
+<div class="w-16 h-16 flex-shrink-0 border border-gray-100 rounded-lg p-1 bg-white">
+<img alt="Company Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj_rbU3ecKyxR_N3vGEE6woArtr1YNWCLwjAGRna84I8MJBe7PNpQI4YQPVpzbNmtx73r0gviIOzme3K-tfSaivdrkmxyYrUuMBUvPwBUV6MhYdtvx_J-xbpvwh2UPUfgHe3Hs2SDX8Ws9deBmgD4wc8E5XrsgHMxfPyIvnD-vb_Ww_ln0kvzr4i80Cep_C9bVUgs38j-0_9XoqGV0qYsEmrae8SghszMoUoDxy8yKYQc2cOnn8zjNy50vcw5faAIKorrg_xYeVQ" style=""/>
+</div>
+<div class="flex-grow">
+<h3 class="text-sm font-bold text-gray-900 leading-tight" style="">Nhân Viên Kinh Doanh/ Tư Vấn/ Sales B2B - Tại Hà Nội (Ưu Tiên N...</h3>
+<p class="text-xs text-gray-500 mt-1 uppercase" style="">CÔNG TY CỔ PHẦN OPEN HEALTHCAR...</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex space-x-2">
+<span class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-bold font-manrope" style="">Thoả thuận</span>
+<span class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-bold font-manrope" style="">Hà Nội</span>
+</div>
+<button class="text-primary p-1 bg-emerald-50 rounded-full" style="">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</article>
+<!-- Best Job Card 2 (With Lightning Icon) -->
+<article class="bg-mint-light rounded-xl p-4 shadow-sm mb-4 border border-primary relative overflow-hidden font-manrope" data-purpose="job-card-featured-lightning">
+<!-- Top Left Corner Tag -->
+<div class="absolute top-0 left-0 z-10">
+<div class="bg-primary text-white p-1 rounded-br-lg">
+<svg class="h-4 w-4" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" fill-rule="evenodd"></path>
+</svg>
+</div>
+</div>
+<div class="flex space-x-4">
+<div class="w-16 h-16 flex-shrink-0 border border-gray-100 rounded-lg p-1 bg-white">
+<img alt="Company Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrkZ2Vwlxn0u2wC_kyy76Kaj7qJTi9VUdnBtv24_k3kjzvw81SLfY_U79ltQRHDeQnYJGuOT00KfRBVhTZTQrhd_X8Mp96l7bXT6tPk7dTqGTVg9u-ByfamvSpIpIQWh-Hx0LpBbYF2gpL6F3-dmHb-3YWXHzru7EHfhg1omNeBDKtb7e_dS2ysZn5Nj8RISY6wwVkJfAVx3JB9KGUHZLt_n9p58a0sVXhoU1ZHqQAob9ik9B2E4a-Ulb3ExDtYIo65G6NB2Kc-A" style=""/>
+</div>
+<div class="flex-grow">
+<h3 class="text-sm font-bold text-gray-900 leading-tight" style="">Trưởng Phòng Dự Toán Công Trình - Nội Thất (Thu Nhập 18 - 2...</h3>
+<p class="text-xs text-gray-500 mt-1 uppercase" style="">Công ty TNHH VMD Việt Nam</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-4">
+<div class="flex space-x-2">
+<span class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-bold font-manrope" style="">18 - 25 triệu</span>
+<span class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full font-bold font-manrope" style="">Hà Nội</span>
+</div>
+<button class="text-primary p-1 bg-emerald-50 rounded-full" style="">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</article>
+</section>
+<!-- END: Best Jobs Highlighted Section -->
+<!-- BEGIN: Successful Experience Section -->
+<section class="px-4 mt-8" data-purpose="successful-experience">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-gray-800" style="">Kinh nghiệm thành công</h2>
+<a class="text-primary font-medium text-base" href="#" style="">Xem tất cả</a>
+</div>
+<div class="overflow-x-auto no-scrollbar flex space-x-4 -mx-4 px-4">
+<!-- Card 1 -->
+<article class="min-w-[280px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-2">
+<img alt="Thumbnail" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlQEQyyCVvewc5XBerJxm8L7PH4U5srtV7vgsa0HZKCWRx1kwbTAkign9-6XuKzBKkuNunzz-eakN0Ganep06kRUwabg6HjQdhPkdGwSC7yPIglD_judE1Ti0-thqRD8iMwbMQjKwHJdxUG7YhTNjZPh4Go8iy3YgrEx_qov1BaT7lRdc47oU-6hDHiX8jRQ4qsXay6Q2K5mUXqs-m7h03JODVPhCZ5tVSHCMW_h23WcSmplX0Zl_8sjY1x9Ty7iKvBju_dcb4tA" style=""/>
+<div class="p-3">
+<h3 class="text-sm font-bold text-gray-900 leading-snug line-clamp-2" style="">Nhân viên sản xuất là gì? Mức lương và cơ hội việc làm</h3>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="min-w-[280px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-2">
+<img alt="Thumbnail" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo69ucKKu232WzRj3m1SosS28lEprfyrjGcsNNKV8i-WA9UlvmrzfSPX3eabgM9-AcBR0NVb8pEnBswpuUOJOsTdkhriMD_z4sQ3mjCOzK2GssaMn2S13mgpugMtssKLjZOgDFsQDM8GkGuXbXvBhHItjvkttb_qkqp7VEQc0sjo2bY8XgE-dGSa3dy1nGRoCP2A550v1VHUzUh_PHXczD0zTU1qJZygn4YvvAK0jH8sS18HXSWuzYWK68hyuBG0t5yucsK6R87g" style=""/>
+<div class="p-3">
+<h3 class="text-sm font-bold text-gray-900 leading-snug line-clamp-2" style="">Câu hỏi phỏng vấn thường gặp và cách trả lời ấn tượng</h3>
+</div>
+</article>
+</div>
+</section>
+<!-- END: Successful Experience Section -->
+<!-- BEGIN: CV Writing Guide Section -->
+<section class="px-4 mt-8" data-purpose="cv-writing-guide">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-gray-800" style="">Hướng dẫn viết CV</h2>
+<a class="text-primary font-medium text-base" href="#" style="">Xem tất cả</a>
+</div>
+<div class="overflow-x-auto no-scrollbar flex space-x-4 -mx-4 px-4">
+<!-- Card 1 -->
+<article class="min-w-[280px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-2">
+<div class="h-40 overflow-hidden">
+<img alt="CV Guide" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNoJb1Lbl3PoTZGL4wi_KqaoyO30Z43WAqA3d79oUaSoAt2OD_7NolRU7mRB-L-hGMdIxsBUtSLk3nRuhI1RZXQjlK9s-DZVhEN6qudJCvUQF-iaV-vEgUyoYHuJR5kTvmarWD8R7W3Cnao1XbbrY6-nw8t794JgHFnibSUlVfbplDlmaVIN7ac3NjY0XBhJG1pNFmqaOhQIkGomNVhOwEp-qiPj15fHPlrd7cxspNU-J8l-Op8LWRZTdqr71RfUQX9TWhsj3lVQ" style=""/>
+</div>
+<div class="p-3">
+<h3 class="text-sm font-bold text-gray-900 leading-snug line-clamp-2" style="">Lưu lại ngay các mẫu mục tiêu nghề nghiệp nhân sự ấn tượng nhất</h3>
+<p class="text-[10px] text-gray-500 mt-1 line-clamp-1" style="">Việc chuẩn bị trước mục tiêu nghề nghiệp không chỉ giúp CV...</p>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="min-w-[280px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-2">
+<div class="h-40 overflow-hidden">
+<img alt="CV Guide" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrkZ2Vwlxn0u2wC_kyy76Kaj7qJTi9VUdnBtv24_k3kjzvw81SLfY_U79ltQRHDeQnYJGuOT00KfRBVhTZTQrhd_X8Mp96l7bXT6tPk7dTqGTVg9u-ByfamvSpIpIQWh-Hx0LpBbYF2gpL6F3-dmHb-3YWXHzru7EHfhg1omNeBDKtb7e_dS2ysZn5Nj8RISY6wwVkJfAVx3JB9KGUHZLt_n9p58a0sVXhoU1ZHqQAob9ik9B2E4a-Ulb3ExDtYIo65G6NB2Kc-A" style=""/>
+</div>
+<div class="p-3">
+<h3 class="text-sm font-bold text-gray-900 leading-snug line-clamp-2" style="">Hướng dẫn viết kỹ năng chuyên môn trong CV cho sinh viên mới ra trường</h3>
+<p class="text-[10px] text-gray-500 mt-1 line-clamp-1" style="">Mục tiêu của phần kỹ năng là cho nhà tuyển dụng thấy...</p>
+</div>
+</article>
+</div>
+</section>
+<!-- END: CV Writing Guide Section -->
+<!-- BEGIN: Secondary Discover Banner -->
+<section class="px-4 py-8 mb-4 flex justify-center" data-purpose="discover-banner-footer">
+<button class="flex items-center space-x-2 py-2.5 px-6 bg-white shadow-lg rounded-full text-gray-800 font-semibold border border-gray-50 transition-colors" style="">
+<svg class="h-5 w-5 text-primary" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path>
+</svg>
+<span class="" style="">Việc làm gần bạn</span>
+</button>
+</section>
+<!-- END: Secondary Discover Banner -->
+</main>
+<!-- BEGIN: Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 px-2 py-2 flex justify-around items-center safe-area-bottom z-50" data-purpose="bottom-nav">
+<div class="flex flex-col items-center text-primary">
+<svg class="h-6 w-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+</svg>
+<span class="text-[10px] font-bold mt-1" style="">Trang chủ</span>
+</div>
+<div class="flex flex-col items-center text-gray-400 relative">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1" style="">Tạo CV</span>
+<span class="absolute -top-1 -right-2 bg-orange-500 text-white text-[8px] px-1 rounded-full border border-white" style="">New</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1 whitespace-nowrap" style="">NTD → UV</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[10px] font-medium mt-1" style="">Thông báo</span>
+</div>
+<div class="flex flex-col items-center text-gray-400">
+<div class="w-6 h-6 rounded-full bg-gray-200 border border-gray-300 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5rx7r7WDYCJYl7iyE_luF4Lz86slkoHeMj6LKSRNR6HwARryRnHQ92Jo7WiAF_D_4gLoefI8Ox6K4L9Kp-esR_rC7KH2mlk9OGtlLAzS5T0ZJa4vkHeSmFsyJasHeFSqC_fzc-pBezfJXZAjFq3fd8Cb5_UaaeAj5WZV-si6XVnYLOSlLw54tdHzZZCcLpY60Yo8qc3-0s2Pt8Hti2QNgbtiMdEwOUCXpqB2bPrBTtvbxU2I-cCKgOZI9AopoW4HCQpSw-R5Ikg" style=""/>
+</div>
+<span class="text-[10px] font-medium mt-1" style="">Tài khoản</span>
+</div>
+</nav>
+<!-- END: Bottom Navigation -->
+</body></html>

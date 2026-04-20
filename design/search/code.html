@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tìm kiếm việc làm - The Career Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#006e2e",
+              "inverse-on-surface": "#eff1ef",
+              "on-primary": "#ffffff",
+              "surface-variant": "#e1e3e1",
+              "on-primary-fixed": "#002109",
+              "tertiary": "#af294c",
+              "surface-container-high": "#e6e9e7",
+              "surface-tint": "#006e2e",
+              "outline": "#6d7b6c",
+              "tertiary-container": "#fd6584",
+              "on-primary-fixed-variant": "#005321",
+              "on-tertiary-fixed": "#400013",
+              "surface": "#f8faf8",
+              "primary-fixed": "#71fe91",
+              "on-primary-container": "#003a15",
+              "on-secondary-fixed-variant": "#195127",
+              "primary-container": "#00b14f",
+              "on-secondary-fixed": "#002109",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#52e078",
+              "background": "#f8faf8",
+              "surface-container-highest": "#e1e3e1",
+              "surface-container-low": "#f2f4f2",
+              "on-secondary": "#ffffff",
+              "on-surface-variant": "#3d4a3d",
+              "on-background": "#191c1b",
+              "on-tertiary-container": "#680024",
+              "secondary-container": "#b2eeb6",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2e3130",
+              "on-tertiary-fixed-variant": "#8e0b36",
+              "secondary-fixed": "#b5f1b9",
+              "surface-bright": "#f8faf8",
+              "error": "#ba1a1a",
+              "on-surface": "#191c1b",
+              "surface-dim": "#d8dad9",
+              "secondary-fixed-dim": "#99d59e",
+              "secondary": "#336a3d",
+              "on-error-container": "#93000a",
+              "outline-variant": "#bccbb9",
+              "primary-fixed-dim": "#52e078",
+              "surface-container": "#eceeec",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#376e41",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#ffd9dd",
+              "tertiary-fixed-dim": "#ffb2bc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+      }
+      .editorial-shadow {
+        box-shadow: 0 10px 30px -10px rgba(0, 110, 46, 0.08);
+      }
+    </style>
+<style>
+    body {
+      min-height: 100dvh;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-[#f8faf8] dark:bg-emerald-950/20 backdrop-blur-xl fixed top-0 w-full z-50">
+<div class="flex items-center gap-4 px-4 h-18 w-full py-3">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-emerald-50 active:scale-95 duration-200">
+<span class="material-symbols-outlined text-emerald-700">arrow_back</span>
+</button>
+<div class="flex-1 relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all duration-300 font-medium" placeholder="Vị trí tuyển dụng, tên công ty..." type="text"/>
+</div>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-emerald-50 active:scale-95 duration-200">
+<span class="material-symbols-outlined text-emerald-700">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-8 px-4 max-w-3xl mx-auto">
+<!-- Phần Từ khóa phổ biến -->
+<section class="mb-10">
+<div class="mb-4 px-1">
+<h2 class="font-headline text-lg font-bold text-on-background">Từ khóa phổ biến</h2>
+</div>
+<div class="flex flex-col">
+<div class="py-4 border-b border-surface-container-high text-on-surface-variant font-normal text-base hover:bg-surface-container-low transition-all cursor-pointer px-1">
+                    tiếng hàn
+                </div>
+<div class="py-4 border-b border-surface-container-high text-on-surface-variant font-normal text-base hover:bg-surface-container-low transition-all cursor-pointer px-1">
+                    lập trình viên php
+                </div>
+<div class="py-4 border-b border-surface-container-high text-on-surface-variant font-normal text-base hover:bg-surface-container-low transition-all cursor-pointer px-1">
+                    tiếng trung
+                </div>
+<div class="py-4 border-b border-surface-container-high text-on-surface-variant font-normal text-base hover:bg-surface-container-low transition-all cursor-pointer px-1">
+                    trợ lý giám đốc
+                </div>
+<div class="py-4 border-b border-surface-container-high text-on-surface-variant font-normal text-base hover:bg-surface-container-low transition-all cursor-pointer px-1">
+                    giáo viên tiếng anh
+                </div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-4 text-primary font-bold text-sm transition-opacity">
+                Xem thêm
+                <span class="material-symbols-outlined">expand_more</span>
+</button>
+</section>
+<!-- Phần Gợi ý việc làm phù hợp -->
+<section>
+<div class="flex items-center justify-between mb-6 px-1">
+<h2 class="font-headline text-xl font-extrabold tracking-tight text-on-background">Gợi ý việc làm phù hợp</h2>
+</div>
+<div class="space-y-4">
+<!-- Job Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 relative group hover:-translate-y-1 transition-transform duration-300 border-2 border-primary-container/40">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Company Logo" class="w-full h-full object-cover" data-alt="Corporate minimalist professional company logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHnMI-b4kD3KgxILzLJAe_ePbhCu1DBPlioRQpXQ7cKVcQ_Dn528Ys4zGg0mdCYFnOxMws5b9_Y4970o44B9Eqx2bRtv2TPHAp0h-sUhGmqdv-u7dDOMBYSgJ7hAi4brlW39lBukz0WFmLwaOvU2H7FPi0BC4Vy0ImrcvXvCXRzopwH-FBkycH2Esl7SErHVXBugPpAbW5qzVRCmNU5GKYePIevKZZy2lIlezuubYJ7j9rbVYk1J2Lo8EB99z7WLI5uC-1cRdkjA"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline text-base font-bold text-on-surface leading-snug mb-1 group-hover:text-primary transition-colors">Kế Toán Trưởng - Lương Từ 20Tr Trở Lên...</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-3">Tập Đoàn Công Nghiệp Đa Quốc Gia</p>
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container/30 text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide">20 - 35 TRIỆU</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+                                        Hải Phòng
+                                    </span>
+</div>
+<button class="text-outline hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Job Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 relative group hover:-translate-y-1 transition-transform duration-300 border-2 border-primary-container/40">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Company Logo" class="w-full h-full object-cover" data-alt="Tech company minimalist logo mark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI_5Y--TXiU54ZVwg9mVSTr7fauXtwqd88j9Ui_RCV9_shFk32AGmqx21RrTAaBjz8X4c1bk1DvtKe10l-JUzG_vla-dTlTroaLduSwjtkf-Rfd9IFrI1B62gBIJiIQQWuoDjurhfdRy858cAfksZ6yJc92bxnlXPtYAhlcy_X6kMkrSZ8o8sOQqUadrwMPxKbE_YsxGfcZrvXmzHezRlSxpfv3ny9MPRnv7J-BjBlTDb8DfwDM2lIHB63H4TwhG76CzNnqOsx5g"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline text-base font-bold text-on-surface leading-snug mb-1 group-hover:text-primary transition-colors">Chuyên Viên Tuyển Dụng Cao Cấp</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-3">Green Valley Group Ltd</p>
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container/30 text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide">THỎA THUẬN</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+                                        Hà Nội
+                                    </span>
+</div>
+<button class="text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Job Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 relative group hover:-translate-y-1 transition-transform duration-300 border-2 border-primary-container/40">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Company Logo" class="w-full h-full object-cover" data-alt="Modern abstract enterprise identity icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe0AN1HJtRTUlO3iC49evixKU3t76dTX8yua67S_RvTjyiwMLBYeLQNav08XxEg8HzlLO7urOy99vCKb4cKGl3bZZmQf-WuwXleC60YvlasYb7Uwocg3f21j7z5VVi9pCDS93DhhwUcS6bC5PNC8HsMo68aAh_KO6nI3O5ZPmCh_fdkb3wld9Ke-JoXvD2lN9RNgM3JSEsmglt9oVvipBRLblKSFl9HijZ-P8tXgdekliAXn5mwC44A7uBjKajNod0tEyGYua5wA"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline text-base font-bold text-on-surface leading-snug mb-1 group-hover:text-primary transition-colors">Giám Đốc Vận Hành (COO)</h3>
+<p class="text-on-surface-variant text-sm font-medium mb-3">StartUp Unicorn Asia</p>
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary-container/30 text-on-secondary-container text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide">UP TO $4000</span>
+<span class="bg-surface-container-high text-on-surface-variant text-[11px] font-bold px-2 py-1 rounded-md uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+                                        TP. Hồ Chí Minh
+                                    </span>
+</div>
+<button class="text-outline hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>
