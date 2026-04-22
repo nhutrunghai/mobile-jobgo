@@ -6,15 +6,21 @@ import { colors, radius, spacing } from '@/src/theme';
 
 type CvLibrarySheetProps = {
   visible: boolean;
-  title: string;
-  subtitle: string;
+  items: {
+    id: string;
+    title: string;
+    subtitle: string;
+  }[];
+  selectedId?: string;
+  onSelect: (resumeId: string) => void;
   onClose: () => void;
 };
 
 export function CvLibrarySheet({
   visible,
-  title,
-  subtitle,
+  items,
+  selectedId,
+  onSelect,
   onClose,
 }: CvLibrarySheetProps) {
   return (
@@ -35,22 +41,41 @@ export function CvLibrarySheet({
             <AppText variant="bodyStrong" color={colors.textMuted} style={styles.sectionLabel}>
               CV ONLINE
             </AppText>
-            <View style={styles.card}>
-              <View style={styles.radioSelected}>
-                <View style={styles.radioDot} />
-              </View>
-              <View style={styles.cardText}>
-                <AppText variant="body" style={styles.cardTitle}>
-                  {title}
+            {items.map((item) => {
+              const selected = item.id === selectedId;
+
+              return (
+                <Pressable
+                  key={item.id}
+                  style={styles.card}
+                  onPress={() => {
+                    onSelect(item.id);
+                    onClose();
+                  }}>
+                  <View style={[styles.radio, selected ? styles.radioSelected : null]}>
+                    {selected ? <View style={styles.radioDot} /> : null}
+                  </View>
+                  <View style={styles.cardText}>
+                    <AppText variant="body" style={styles.cardTitle}>
+                      {item.title}
+                    </AppText>
+                    <AppText variant="caption" color={colors.textMuted}>
+                      {item.subtitle}
+                    </AppText>
+                  </View>
+                  <AppText variant="bodyStrong" color={colors.primaryLink}>
+                    Chọn
+                  </AppText>
+                </Pressable>
+              );
+            })}
+            {items.length === 0 ? (
+              <View style={styles.emptyState}>
+                <AppText variant="body" color={colors.textMuted}>
+                  Bạn chưa có CV nào trong thư viện.
                 </AppText>
-                <AppText variant="caption" color={colors.textMuted}>
-                  {subtitle}
-                </AppText>
               </View>
-              <AppText variant="bodyStrong" color={colors.primaryLink}>
-                Xem CV
-              </AppText>
-            </View>
+            ) : null}
           </View>
         </View>
       </View>
@@ -111,14 +136,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.md,
   },
-  radioSelected: {
+  radio: {
     width: 24,
     height: 24,
     borderRadius: radius.pill,
     borderWidth: 2,
-    borderColor: colors.primary,
+    borderColor: '#D1D5DB',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  radioSelected: {
+    borderColor: colors.primary,
   },
   radioDot: {
     width: 10,
@@ -132,5 +160,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: colors.text,
+  },
+  emptyState: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
   },
 });

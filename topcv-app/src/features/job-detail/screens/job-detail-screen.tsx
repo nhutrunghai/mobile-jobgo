@@ -1,20 +1,152 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Feather } from '@expo/vector-icons';
-import { Link, useLocalSearchParams, useRouter } from 'expo-router';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
 
 import { AppText } from '@/src/components/ui/app-text';
-import { AuthButton } from '@/src/features/auth/components/auth-button';
+import { AppToast } from '@/src/components/ui/app-toast';
 import { detailJob, similarJobs } from '@/src/features/job-detail/data';
 import { DetailInfoChip } from '@/src/features/job-detail/components/detail-info-chip';
+import { useFavorites } from '@/src/features/favorites/hooks/use-favorites';
 import { GeneralInfoCard } from '@/src/features/job-detail/components/general-info-card';
 import { SimilarJobCard } from '@/src/features/job-detail/components/similar-job-card';
+import { getPublicJobDetail, withdrawMyJobApplication } from '@/src/features/job-detail/services/job-detail-api';
+import type { JobDetailViewModel } from '@/src/features/job-detail/types';
+import { mapJobDetailResponseToViewModel } from '@/src/features/job-detail/utils/job-detail-mapper';
+import { ApiError } from '@/src/lib/api/api-error';
 import { colors, radius, spacing } from '@/src/theme';
+
+const initialJobDetail: JobDetailViewModel = {
+  id: detailJob.id,
+  title: detailJob.title,
+  company: detailJob.company,
+  heroImage: detailJob.heroImage,
+  logoImage: detailJob.logoImage,
+  salary: detailJob.salary,
+  location: detailJob.location,
+  experience: detailJob.experience,
+  tags: detailJob.tags ?? [],
+  description: detailJob.description ?? [],
+  requirements: [],
+  benefits: [],
+  skills: detailJob.skills ?? [],
+  generalInfo: detailJob.generalInfo,
+  hasApplied: false,
+};
 
 export function JobDetailScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ id?: string }>();
-  const job = detailJob;
+  const [job, setJob] = useState<JobDetailViewModel>(initialJobDetail);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdatingApplication, setIsUpdatingApplication] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [toastMessage, setToastMessage] = useState<string>();
+  const [toastTone, setToastTone] = useState<'success' | 'error'>('success');
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { isFavorited, toggleFavorite } = useFavorites();
+
+  const showToast = (message: string, tone: 'success' | 'error') => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+
+    setToastMessage(message);
+    setToastTone(tone);
+    setIsToastVisible(true);
+
+    toastTimeoutRef.current = setTimeout(() => {
+      setIsToastVisible(false);
+    }, 2800);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const jobId = params.id;
+
+    if (!jobId) {
+      setIsLoading(false);
+      setErrorMessage('Không tìm thấy công việc');
+      return;
+    }
+
+    const loadJobDetail = async () => {
+      try {
+        setIsLoading(true);
+        setErrorMessage(undefined);
+        const response = await getPublicJobDetail(jobId);
+
+        if (!isMounted) {
+          return;
+        }
+
+        setJob(mapJobDetailResponseToViewModel(response));
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+
+        if (error instanceof ApiError) {
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage('Không thể tải chi tiết việc làm');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadJobDetail();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [params.id]);
+
+  useEffect(() => () => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+  }, []);
+
+  const handlePrimaryAction = async () => {
+    const jobId = params.id ?? job.id;
+
+    if (!job.hasApplied) {
+      router.push({
+        pathname: '/job/[id]/apply',
+        params: { id: jobId },
+      });
+      return;
+    }
+
+    try {
+      setIsUpdatingApplication(true);
+      setErrorMessage(undefined);
+      await withdrawMyJobApplication(jobId);
+      setJob((currentJob) => ({
+        ...currentJob,
+        hasApplied: false,
+        applicationStatus: 'withdrawn',
+      }));
+      showToast('Đã rút hồ sơ ứng tuyển', 'success');
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setErrorMessage(error.message);
+        showToast(error.message, 'error');
+      } else {
+        setErrorMessage('Không thể rút hồ sơ ứng tuyển');
+        showToast('Không thể rút hồ sơ ứng tuyển', 'error');
+      }
+    } finally {
+      setIsUpdatingApplication(false);
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -72,6 +204,16 @@ export function JobDetailScreen() {
         </View>
 
         <View style={styles.sectionCard}>
+          {errorMessage ? (
+            <AppText variant="body" color={colors.tertiary}>
+              {errorMessage}
+            </AppText>
+          ) : null}
+          {isLoading ? (
+            <AppText variant="body" color={colors.textMuted}>
+              Đang tải chi tiết việc làm...
+            </AppText>
+          ) : null}
           <View style={styles.tagWrap}>
             {job.tags.map((tag) => (
               <View key={tag} style={styles.tag}>
@@ -97,6 +239,42 @@ export function JobDetailScreen() {
               ))}
             </View>
           </View>
+
+          {job.requirements.length > 0 ? (
+            <View style={styles.block}>
+              <View style={styles.blockTitleRow}>
+                <View style={styles.blockMarker} />
+                <AppText variant="heading" style={styles.blockTitle}>
+                  Yêu cầu công việc
+                </AppText>
+              </View>
+              <View style={styles.paragraphs}>
+                {job.requirements.map((line) => (
+                  <AppText key={line} variant="body" style={styles.paragraph}>
+                    {line}
+                  </AppText>
+                ))}
+              </View>
+            </View>
+          ) : null}
+
+          {job.benefits.length > 0 ? (
+            <View style={styles.block}>
+              <View style={styles.blockTitleRow}>
+                <View style={styles.blockMarker} />
+                <AppText variant="heading" style={styles.blockTitle}>
+                  Quyền lợi
+                </AppText>
+              </View>
+              <View style={styles.paragraphs}>
+                {job.benefits.map((line) => (
+                  <AppText key={line} variant="body" style={styles.paragraph}>
+                    {line}
+                  </AppText>
+                ))}
+              </View>
+            </View>
+          ) : null}
 
           <View style={styles.block}>
             <View style={styles.blockTitleRow}>
@@ -146,18 +324,56 @@ export function JobDetailScreen() {
       </ScrollView>
 
       <View style={styles.footer}>
-        <View style={styles.saveButton}>
-          <Feather name="heart" size={20} color="#98A2B3" />
-        </View>
-        <Link
-          href={{
-            pathname: '/job/[id]/apply',
-            params: { id: params.id ?? job.id },
-          }}
-          asChild>
-          <AuthButton label="Ứng tuyển ngay" style={styles.applyButton} />
-        </Link>
+        {job.hasApplied ? (
+          <Pressable
+            style={({ pressed }) => [
+              styles.primaryActionButton,
+              styles.withdrawButton,
+              pressed && !isLoading && !isUpdatingApplication ? styles.primaryActionPressed : null,
+              isLoading || isUpdatingApplication ? styles.primaryActionDisabled : null,
+            ]}
+            onPress={() => void handlePrimaryAction()}
+            disabled={isLoading || isUpdatingApplication}>
+            <Feather name="trash-2" size={18} color={colors.white} />
+            <AppText variant="bodyStrong" color={colors.white}>
+              {isUpdatingApplication ? 'Đang rút hồ sơ...' : 'Rút hồ sơ'}
+            </AppText>
+          </Pressable>
+        ) : (
+          <>
+            <Pressable
+              style={styles.saveButton}
+              onPress={() => void toggleFavorite(job.id)}>
+              {isFavorited(job.id) ? (
+                <MaterialIcons name="favorite" size={20} color="#D9487C" />
+              ) : (
+                <Feather name="heart" size={20} color="#98A2B3" />
+              )}
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
+                styles.primaryActionButton,
+                styles.applyButton,
+                pressed && !isLoading && !isUpdatingApplication ? styles.primaryActionPressed : null,
+                isLoading || isUpdatingApplication ? styles.primaryActionDisabled : null,
+              ]}
+              onPress={() => void handlePrimaryAction()}
+              disabled={isLoading || isUpdatingApplication}>
+              <Feather name="send" size={18} color={colors.white} />
+              <AppText variant="bodyStrong" color={colors.white}>
+                {isUpdatingApplication ? 'Đang xử lý...' : 'Ứng tuyển ngay'}
+              </AppText>
+            </Pressable>
+          </>
+        )}
       </View>
+
+      <AppToast
+        visible={isToastVisible}
+        message={toastMessage}
+        tone={toastTone}
+        bottomOffset={80}
+      />
     </View>
   );
 }
@@ -370,8 +586,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.surface,
   },
+  primaryActionButton: {
+    minHeight: 52,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.lg,
+  },
+  primaryActionPressed: {
+    opacity: 0.92,
+    transform: [{ scale: 0.985 }],
+  },
+  primaryActionDisabled: {
+    opacity: 0.6,
+  },
   applyButton: {
     flex: 1,
-    borderRadius: radius.md,
+    backgroundColor: colors.primary,
+  },
+  withdrawButton: {
+    flex: 1,
+    backgroundColor: colors.tertiary,
   },
 });

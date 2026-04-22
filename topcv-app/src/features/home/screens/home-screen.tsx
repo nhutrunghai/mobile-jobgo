@@ -10,6 +10,10 @@ import { BottomNav } from '@/src/features/home/components/bottom-nav';
 import { JobCard } from '@/src/features/home/components/job-card';
 import { QuickActionItem } from '@/src/features/home/components/quick-action-item';
 import { SectionHeader } from '@/src/features/home/components/section-header';
+import { useFavorites } from '@/src/features/favorites/hooks/use-favorites';
+import { getFeaturedHomeJobs, getLatestHomeJobs } from '@/src/features/home/services/home-api';
+import type { HomeJobCardItem } from '@/src/features/home/types';
+import { mapHomeJobToCard } from '@/src/features/home/utils/job-card-mapper';
 import {
   bestJobs,
   bottomNavItems,
@@ -19,6 +23,7 @@ import {
   successArticles,
   suggestedJobs,
 } from '@/src/features/home/data';
+import { ApiError } from '@/src/lib/api/api-error';
 import { colors, radius, spacing } from '@/src/theme';
 
 export function HomeScreen() {
@@ -30,11 +35,20 @@ export function HomeScreen() {
   const [placeholderWordIndex, setPlaceholderWordIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [featuredJobs, setFeaturedJobs] = useState<HomeJobCardItem[]>([]);
+  const [latestJobs, setLatestJobs] = useState<HomeJobCardItem[]>([]);
+  const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+  const [jobsError, setJobsError] = useState<string>();
+  const { isFavorited, toggleFavorite } = useFavorites();
   const navItems = bottomNavItems.map((item) => ({
     ...item,
     href:
       item.key === 'home'
         ? ('/(tabs)' as const)
+        : item.key === 'cv'
+          ? ('/(tabs)/applications' as const)
+        : item.key === 'match'
+          ? ('/(tabs)/assistant' as const)
         : item.key === 'notice'
           ? ('/(tabs)/explore' as const)
           : item.key === 'profile'
@@ -76,6 +90,52 @@ export function HomeScreen() {
 
     return () => clearTimeout(timer);
   }, [isDeleting, placeholderSuffixes, placeholderWordIndex, typedText]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadHomeJobs = async () => {
+      try {
+        setIsLoadingJobs(true);
+        setJobsError(undefined);
+
+        const [featuredResponse, latestResponse] = await Promise.all([
+          getFeaturedHomeJobs(4),
+          getLatestHomeJobs(4),
+        ]);
+
+        if (!isMounted) {
+          return;
+        }
+
+        setFeaturedJobs(featuredResponse.data.items.map(mapHomeJobToCard));
+        setLatestJobs(latestResponse.data.items.map(mapHomeJobToCard));
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+
+        if (error instanceof ApiError) {
+          setJobsError(error.message);
+        } else {
+          setJobsError('Không thể tải danh sách việc làm');
+        }
+
+        setFeaturedJobs([]);
+        setLatestJobs([]);
+      } finally {
+        if (isMounted) {
+          setIsLoadingJobs(false);
+        }
+      }
+    };
+
+    void loadHomeJobs();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <View style={styles.screen}>
@@ -149,13 +209,23 @@ export function HomeScreen() {
             <Feather name="x" size={16} color="#60A5FA" />
           </View>
           <View style={styles.cards}>
-            {suggestedJobs.map((job) => (
+            {featuredJobs.length > 0
+              ? featuredJobs.map((job) => (
+              <JobCard
+                key={`suggested-${job.id}`}
+                {...job}
+                favorite={isFavorited(job.id)}
+                onPress={() => router.push({ pathname: '/job/[id]', params: { id: job.id } })}
+                onFavoritePress={() => void toggleFavorite(job.id)}
+              />
+                ))
+              : suggestedJobs.map((job) => (
               <JobCard
                 key={`suggested-${job.title}`}
                 {...job}
                 onPress={() => router.push({ pathname: '/job/[id]', params: { id: 'chief-accountant' } })}
               />
-            ))}
+                ))}
           </View>
         </View>
 
@@ -173,15 +243,35 @@ export function HomeScreen() {
               })
             }
           />
+          {jobsError ? (
+            <AppText variant="caption" color={colors.tertiary}>
+              {jobsError}
+            </AppText>
+          ) : null}
           <View style={styles.cards}>
-            {bestJobs.map((job) => (
+            {latestJobs.length > 0
+              ? latestJobs.map((job) => (
+              <JobCard
+                key={`best-${job.id}`}
+                {...job}
+                favorite={isFavorited(job.id)}
+                onPress={() => router.push({ pathname: '/job/[id]', params: { id: job.id } })}
+                onFavoritePress={() => void toggleFavorite(job.id)}
+              />
+                ))
+              : bestJobs.map((job) => (
               <JobCard
                 key={`best-${job.title}`}
                 {...job}
                 onPress={() => router.push({ pathname: '/job/[id]', params: { id: 'chief-accountant' } })}
               />
-            ))}
+                ))}
           </View>
+          {isLoadingJobs ? (
+            <AppText variant="caption" color={colors.textMuted}>
+              Đang tải việc làm...
+            </AppText>
+          ) : null}
         </View>
 
         <View style={styles.section}>
@@ -191,7 +281,16 @@ export function HomeScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.horizontalList}>
             {successArticles.map((article) => (
-              <ArticleCard key={article.title} {...article} />
+              <ArticleCard
+                key={article.id}
+                {...article}
+                onPress={() =>
+                  router.push({
+                    pathname: '/article/[id]',
+                    params: { id: article.id },
+                  })
+                }
+              />
             ))}
           </ScrollView>
         </View>
@@ -203,7 +302,16 @@ export function HomeScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.horizontalList}>
             {cvGuides.map((article) => (
-              <ArticleCard key={`guide-${article.title}`} {...article} />
+              <ArticleCard
+                key={article.id}
+                {...article}
+                onPress={() =>
+                  router.push({
+                    pathname: '/article/[id]',
+                    params: { id: article.id },
+                  })
+                }
+              />
             ))}
           </ScrollView>
         </View>

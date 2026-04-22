@@ -12,6 +12,10 @@ export function NotificationsScreen() {
     href:
       item.key === 'home'
         ? ('/(tabs)' as const)
+        : item.key === 'cv'
+          ? ('/(tabs)/applications' as const)
+        : item.key === 'match'
+          ? ('/(tabs)/assistant' as const)
         : item.key === 'notice'
           ? ('/(tabs)/explore' as const)
           : item.key === 'profile'

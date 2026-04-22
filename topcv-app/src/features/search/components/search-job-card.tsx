@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import { AppText } from '@/src/components/ui/app-text';
 import { colors, radius, spacing } from '@/src/theme';
@@ -55,12 +55,15 @@ export function SearchJobCard({
         </View>
 
         <View style={styles.favoriteWrap}>
-          <Feather
-            name="heart"
-            size={20}
-            color={favorite ? '#D9487C' : '#7DCB93'}
-            style={favorite ? styles.favoriteFilled : undefined}
-          />
+          {favorite ? (
+            <MaterialIcons name="favorite" size={20} color="#D9487C" style={styles.favoriteFilled} />
+          ) : (
+            <Feather
+              name="heart"
+              size={20}
+              color="#7DCB93"
+            />
+          )}
         </View>
       </View>
     </Pressable>

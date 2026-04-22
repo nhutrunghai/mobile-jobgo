@@ -1,7 +1,6 @@
 export const applicationData = {
   cvTitle: 'Back-end Developer',
   cvUpdatedAt: 'Cập nhật lần cuối: 19/01/2026',
-  desiredLocation: 'Hải Phòng',
   coverLetterPlaceholder:
     'Viết giới thiệu ngắn gọn về bản thân (điểm mạnh, điểm yếu) và nêu rõ mong muốn, lý do làm việc tại công ty này',
   notes: [

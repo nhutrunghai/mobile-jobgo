@@ -8,16 +8,20 @@ type SearchTopBarProps = {
   query: string;
   onChangeText: (value: string) => void;
   onBackPress: () => void;
+  onSubmit?: () => void;
   searched?: boolean;
   autoFocus?: boolean;
+  locationLabel?: string;
 };
 
 export function SearchTopBar({
   query,
   onChangeText,
   onBackPress,
+  onSubmit,
   searched = false,
   autoFocus = true,
+  locationLabel,
 }: SearchTopBarProps) {
   return (
     <View style={styles.wrapper}>
@@ -28,13 +32,12 @@ export function SearchTopBar({
           </Pressable>
 
           {searched ? (
-            <Pressable style={styles.locationChip}>
+            <View style={styles.locationChip}>
               <Feather name="map-pin" size={16} color={colors.primary} />
               <AppText variant="bodyStrong" color={colors.primaryDark}>
-                Địa điểm
+                {locationLabel ?? 'Toàn quốc'}
               </AppText>
-              <Feather name="chevron-down" size={16} color={colors.primary} />
-            </Pressable>
+            </View>
           ) : null}
         </View>
 
@@ -49,6 +52,7 @@ export function SearchTopBar({
           autoFocus={autoFocus}
           value={query}
           onChangeText={onChangeText}
+          onSubmitEditing={onSubmit}
           placeholder="Vị trí tuyển dụng, tên công ty..."
           placeholderTextColor="#A0A6A2"
           style={styles.input}

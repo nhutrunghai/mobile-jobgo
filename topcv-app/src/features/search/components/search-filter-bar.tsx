@@ -4,8 +4,16 @@ import { Feather } from '@expo/vector-icons';
 import { AppText } from '@/src/components/ui/app-text';
 import { colors, radius, spacing } from '@/src/theme';
 
+type SearchFilterItem = {
+  key: string;
+  label?: string;
+  active?: boolean;
+  open?: boolean;
+  onPress?: () => void;
+};
+
 type SearchFilterBarProps = {
-  filters: readonly { key: string; label?: string }[];
+  filters: readonly SearchFilterItem[];
 };
 
 export function SearchFilterBar({ filters }: SearchFilterBarProps) {
@@ -17,14 +25,27 @@ export function SearchFilterBar({ filters }: SearchFilterBarProps) {
       {filters.map((filter) => (
         <Pressable
           key={filter.key}
-          style={[styles.chip, filter.key === 'filter' ? styles.filterChip : null]}>
-          {filter.key === 'filter' ? <Feather name="sliders" size={18} color="#55615B" /> : null}
+          style={[
+            styles.chip,
+            filter.key === 'filter' ? styles.filterChip : null,
+            filter.active ? styles.activeChip : null,
+          ]}
+          onPress={filter.onPress}>
+          {filter.key === 'filter' ? (
+            <Feather name="sliders" size={18} color={filter.active ? colors.primary : '#55615B'} />
+          ) : null}
           {filter.label ? (
-            <AppText variant="body" style={styles.label}>
+            <AppText variant="body" style={[styles.label, filter.active ? styles.activeLabel : null]}>
               {filter.label}
             </AppText>
           ) : null}
-          {filter.key !== 'filter' ? <Feather name="chevron-down" size={18} color="#8D968F" /> : null}
+          {filter.key !== 'filter' ? (
+            <Feather
+              name={filter.open ? 'chevron-up' : 'chevron-down'}
+              size={18}
+              color={filter.active || filter.open ? colors.primary : '#8D968F'}
+            />
+          ) : null}
         </Pressable>
       ))}
     </ScrollView>
@@ -55,10 +76,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     gap: 0,
   },
+  activeChip: {
+    borderColor: '#A6E1B4',
+    backgroundColor: '#EEFBEF',
+  },
   label: {
     color: '#46524C',
     fontSize: 13,
     lineHeight: 16,
     flexShrink: 0,
+  },
+  activeLabel: {
+    color: colors.primaryDark,
+    fontWeight: '600',
   },
 });

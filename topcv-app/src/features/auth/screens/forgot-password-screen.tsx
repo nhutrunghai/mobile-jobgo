@@ -1,15 +1,64 @@
 import { Feather } from '@expo/vector-icons';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { AppText } from '@/src/components/ui/app-text';
 import { AuthButton } from '@/src/features/auth/components/auth-button';
 import { AuthHeader } from '@/src/features/auth/components/auth-header';
 import { AuthInput } from '@/src/features/auth/components/auth-input';
 import { AuthShell } from '@/src/features/auth/components/auth-shell';
-import { radius, spacing } from '@/src/theme';
+import { requestPasswordReset } from '@/src/features/auth/services/auth-api';
+import { ApiError } from '@/src/lib/api/api-error';
+import { colors, radius, spacing } from '@/src/theme';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ForgotPasswordScreen() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState<string>();
+  const [submitError, setSubmitError] = useState<string>();
+  const [successMessage, setSuccessMessage] = useState<string>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleForgotPassword = async () => {
+    const nextEmail = email.trim().toLowerCase();
+
+    setEmailError(undefined);
+    setSubmitError(undefined);
+    setSuccessMessage(undefined);
+
+    if (!nextEmail) {
+      setEmailError('Vui lòng nhập email');
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(nextEmail)) {
+      setEmailError('Email không đúng định dạng');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await requestPasswordReset({ email: nextEmail });
+      setSuccessMessage(response.message);
+      router.push({
+        pathname: '/(auth)/reset-password',
+        params: {
+          email: nextEmail,
+        },
+      });
+    } catch (error) {
+      if (error instanceof ApiError) {
+        setSubmitError(error.message);
+      } else {
+        setSubmitError('Khong the ket noi den may chu');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <AuthShell scrollEnabled={false} contentContainerStyle={styles.content}>
@@ -25,10 +74,27 @@ export function ForgotPasswordScreen() {
           placeholder="example@gmail.com"
           keyboardType="email-address"
           autoCapitalize="none"
+          autoCorrect={false}
+          value={email}
+          onChangeText={setEmail}
+          error={emailError}
         />
-        <Link href="/(auth)/reset-password" asChild>
-          <AuthButton label="Tạo lại mật khẩu" style={styles.submitButton} />
-        </Link>
+        {submitError ? (
+          <AppText variant="caption" color={colors.tertiary}>
+            {submitError}
+          </AppText>
+        ) : null}
+        {successMessage ? (
+          <AppText variant="caption" color={colors.primary}>
+            {successMessage}
+          </AppText>
+        ) : null}
+        <AuthButton
+          label={isSubmitting ? 'Dang xu ly...' : 'Tạo lại mật khẩu'}
+          style={styles.submitButton}
+          onPress={handleForgotPassword}
+          disabled={isSubmitting}
+        />
       </View>
 
       <View style={styles.illustration}>
@@ -54,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   submitButton: {
-    marginTop: 256,
+    marginTop: 24,
   },
   illustration: {
     flex: 1,

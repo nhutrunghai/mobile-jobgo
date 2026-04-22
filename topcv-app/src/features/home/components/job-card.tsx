@@ -1,19 +1,22 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import { AppText } from '@/src/components/ui/app-text';
 import { colors, radius, spacing } from '@/src/theme';
 
 type JobCardProps = {
+  id?: string;
   title: string;
   company: string;
   salary: string;
   location: string;
   image: string;
+  favorite?: boolean;
   highlighted?: boolean;
   badge?: 'bolt';
   onPress?: () => void;
+  onFavoritePress?: () => void;
 };
 
 export function JobCard({
@@ -22,30 +25,34 @@ export function JobCard({
   salary,
   location,
   image,
+  favorite,
   highlighted,
   badge,
   onPress,
+  onFavoritePress,
 }: JobCardProps) {
   return (
-    <Pressable style={[styles.card, highlighted ? styles.cardHighlighted : null]} onPress={onPress}>
+    <View style={[styles.card, highlighted ? styles.cardHighlighted : null]}>
       {badge === 'bolt' ? (
         <View style={styles.badge}>
           <Feather name="zap" size={14} color={colors.white} />
         </View>
       ) : null}
-      <View style={styles.contentRow}>
-        <View style={styles.logoWrap}>
-          <Image source={{ uri: image }} style={styles.logo} contentFit="contain" />
+      <Pressable onPress={onPress} style={styles.contentPressable}>
+        <View style={styles.contentRow}>
+          <View style={styles.logoWrap}>
+            <Image source={{ uri: image }} style={styles.logo} contentFit="contain" />
+          </View>
+          <View style={styles.textWrap}>
+            <AppText variant="bodyStrong" style={styles.title} numberOfLines={2}>
+              {title}
+            </AppText>
+            <AppText variant="caption" color={colors.textMuted} style={styles.company} numberOfLines={1}>
+              {company}
+            </AppText>
+          </View>
         </View>
-        <View style={styles.textWrap}>
-          <AppText variant="bodyStrong" style={styles.title} numberOfLines={2}>
-            {title}
-          </AppText>
-          <AppText variant="caption" color={colors.textMuted} style={styles.company} numberOfLines={1}>
-            {company}
-          </AppText>
-        </View>
-      </View>
+      </Pressable>
       <View style={styles.footer}>
         <View style={styles.tags}>
           <View style={[styles.tag, styles.salaryTag]}>
@@ -59,11 +66,19 @@ export function JobCard({
             </AppText>
           </View>
         </View>
-        <View style={styles.favorite}>
-          <Feather name="heart" size={18} color={highlighted ? colors.primary : '#98A2B3'} />
-        </View>
+        <Pressable style={styles.favorite} hitSlop={8} onPress={onFavoritePress}>
+          {favorite ? (
+            <MaterialIcons name="favorite" size={18} color="#D9487C" />
+          ) : (
+            <Feather
+              name="heart"
+              size={18}
+              color={highlighted ? colors.primary : '#98A2B3'}
+            />
+          )}
+        </Pressable>
       </View>
-    </Pressable>
+    </View>
   );
 }
 
@@ -76,6 +91,9 @@ const styles = StyleSheet.create({
     padding: 14,
     gap: spacing.md,
     overflow: 'hidden',
+  },
+  contentPressable: {
+    gap: spacing.md,
   },
   cardHighlighted: {
     borderColor: colors.primary,

@@ -8,6 +8,7 @@ type AuthButtonProps = {
   onPress?: () => void;
   variant?: 'primary' | 'secondary' | 'ghost';
   style?: ViewStyle;
+  disabled?: boolean;
 };
 
 export function AuthButton({
@@ -15,16 +16,19 @@ export function AuthButton({
   onPress,
   variant = 'primary',
   style,
+  disabled = false,
 }: AuthButtonProps) {
   return (
     <Pressable
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.base,
         variant === 'primary' ? styles.primary : null,
         variant === 'secondary' ? styles.secondary : null,
         variant === 'ghost' ? styles.ghost : null,
-        pressed ? styles.pressed : null,
+        pressed && !disabled ? styles.pressed : null,
+        disabled ? styles.disabled : null,
         style,
       ]}>
       <AppText
@@ -56,5 +60,8 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.9,
     transform: [{ scale: 0.985 }],
+  },
+  disabled: {
+    opacity: 0.6,
   },
 });

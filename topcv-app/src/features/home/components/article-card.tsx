@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 
 import { AppText } from '@/src/components/ui/app-text';
@@ -8,11 +8,14 @@ type ArticleCardProps = {
   title: string;
   subtitle?: string;
   image: string;
+  onPress?: () => void;
 };
 
-export function ArticleCard({ title, subtitle, image }: ArticleCardProps) {
+export function ArticleCard({ title, subtitle, image, onPress }: ArticleCardProps) {
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={({ pressed }) => [styles.card, pressed ? styles.cardPressed : null]}
+      onPress={onPress}>
       <Image source={{ uri: image }} style={styles.image} contentFit="cover" />
       <View style={styles.content}>
         <AppText variant="bodyStrong" style={styles.title} numberOfLines={2}>
@@ -24,7 +27,7 @@ export function ArticleCard({ title, subtitle, image }: ArticleCardProps) {
           </AppText>
         ) : null}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -36,6 +39,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: 'rgba(17, 24, 39, 0.05)',
+  },
+  cardPressed: {
+    opacity: 0.94,
+    transform: [{ scale: 0.985 }],
   },
   image: {
     width: '100%',
