@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  InteractionManager,
   View,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -28,6 +29,14 @@ import { ApiError } from '@/src/lib/api/api-error';
 import { getAccessToken } from '@/src/lib/auth/token-store';
 import { uploadFiles } from '@/src/lib/uploadthing';
 import { colors, radius, spacing } from '@/src/theme';
+
+function waitForUploadUiFrame() {
+  return new Promise<void>((resolve) => {
+    requestAnimationFrame(() => {
+      InteractionManager.runAfterInteractions(() => resolve());
+    });
+  });
+}
 
 function formatResumeUpdatedAt(value?: string) {
   if (!value) {
@@ -135,9 +144,12 @@ export function JobApplicationScreen() {
   }, []);
 
   const handleUploadResume = async () => {
+    if (isUploadingResume) {
+      return;
+    }
+
     try {
       setResumeError(undefined);
-      setIsUploadingResume(true);
 
       const pickedDocument = await DocumentPicker.getDocumentAsync({
         multiple: false,
@@ -159,15 +171,16 @@ export function JobApplicationScreen() {
         return;
       }
 
-      const fileBlob = await fetch(selectedAsset.uri).then((response) => response.blob());
-      const pickedFile = Object.assign(
-        new File([fileBlob], selectedAsset.name, {
-          type: selectedAsset.mimeType ?? 'application/octet-stream',
-        }),
-        {
-          uri: selectedAsset.uri,
-        },
-      );
+      setIsUploadingResume(true);
+      await waitForUploadUiFrame();
+
+      const pickedFile = {
+        uri: selectedAsset.uri,
+        name: selectedAsset.name,
+        type: selectedAsset.mimeType ?? 'application/octet-stream',
+        size: selectedAsset.size ?? 0,
+        lastModified: Date.now(),
+      } as File;
 
       const accessToken = getAccessToken();
       const uploadedFiles = await uploadFiles('userResume', {

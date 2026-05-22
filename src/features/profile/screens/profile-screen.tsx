@@ -1,6 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { ActivityIndicator, Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  InteractionManager,
+  Linking,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  View,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import * as DocumentPicker from 'expo-document-picker';
@@ -37,6 +48,14 @@ type SettingRowProps = {
   destructive?: boolean;
   onPress?: () => void;
 };
+
+function waitForUploadUiFrame() {
+  return new Promise<void>((resolve) => {
+    requestAnimationFrame(() => {
+      InteractionManager.runAfterInteractions(() => resolve());
+    });
+  });
+}
 
 function SettingRow({ title, icon, destructive, onPress }: SettingRowProps) {
   const textColor = destructive ? '#FF4D4F' : colors.text;
@@ -299,6 +318,10 @@ export function ProfileScreen() {
   };
 
   const handleUploadResume = async () => {
+    if (isUploadingResume) {
+      return;
+    }
+
     if (!isAuthenticated) {
       setCvModalVisible(true);
       setResumeError('Bạn cần đăng nhập để tải CV lên.');
@@ -306,9 +329,7 @@ export function ProfileScreen() {
     }
 
     try {
-      setCvModalVisible(true);
       setResumeError(undefined);
-      setIsUploadingResume(true);
 
       const pickedDocument = await DocumentPicker.getDocumentAsync({
         multiple: false,
@@ -330,15 +351,17 @@ export function ProfileScreen() {
         return;
       }
 
-      const fileBlob = await fetch(selectedAsset.uri).then((response) => response.blob());
-      const pickedFile = Object.assign(
-        new File([fileBlob], selectedAsset.name, {
-          type: selectedAsset.mimeType ?? 'application/octet-stream',
-        }),
-        {
-          uri: selectedAsset.uri,
-        },
-      );
+      setCvModalVisible(true);
+      setIsUploadingResume(true);
+      await waitForUploadUiFrame();
+
+      const pickedFile = {
+        uri: selectedAsset.uri,
+        name: selectedAsset.name,
+        type: selectedAsset.mimeType ?? 'application/octet-stream',
+        size: selectedAsset.size ?? 0,
+        lastModified: Date.now(),
+      } as File;
 
       const accessToken = getAccessToken();
       const uploadedFiles = await uploadFiles('userResume', {
