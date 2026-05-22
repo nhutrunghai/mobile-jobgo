@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
 import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/src/components/ui/app-text';
@@ -10,10 +10,10 @@ import { AuthHeader } from '@/src/features/auth/components/auth-header';
 import { AuthInput, PasswordInput } from '@/src/features/auth/components/auth-input';
 import { AuthShell } from '@/src/features/auth/components/auth-shell';
 import { SocialLoginButtons } from '@/src/features/auth/components/social-login-buttons';
-import { colors, spacing } from '@/src/theme';
 import { loginWithEmail } from '@/src/features/auth/services/auth-api';
 import { ApiError } from '@/src/lib/api/api-error';
 import { useAuth } from '@/src/lib/auth/auth-provider';
+import { colors, spacing } from '@/src/theme';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

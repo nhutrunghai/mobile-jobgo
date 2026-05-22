@@ -24,7 +24,6 @@ export default function RootLayout() {
           <Stack.Screen name="article/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="job/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="job/[id]/apply" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
         </Stack>
         <StatusBar style="dark" />
       </ThemeProvider>
