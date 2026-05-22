@@ -215,7 +215,7 @@ export function ProfileScreen() {
         : item.key === 'cv'
           ? ('/(tabs)/applications' as const)
         : item.key === 'match'
-          ? ('/(tabs)/assistant' as const)
+          ? ('/(tabs)/chatbot' as const)
         : item.key === 'notice'
           ? ('/(tabs)/explore' as const)
           : item.key === 'profile'

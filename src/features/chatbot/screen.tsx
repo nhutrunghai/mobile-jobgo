@@ -1,3 +1,5 @@
+import { Feather } from '@expo/vector-icons';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -10,12 +12,8 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AppText } from '@/src/components/ui/app-text';
-import { BottomNav } from '@/src/features/home/components/bottom-nav';
-import { bottomNavItems } from '@/src/features/home/data';
 import {
   deleteChatSession,
   getChatSession,
@@ -23,6 +21,8 @@ import {
   sendJobChatMessage,
 } from '@/src/features/chatbot/services/chatbot-api';
 import type { ChatSessionSummary, ChatTurn } from '@/src/features/chatbot/types';
+import { BottomNav } from '@/src/features/home/components/bottom-nav';
+import { bottomNavItems } from '@/src/features/home/data';
 import { ApiError } from '@/src/lib/api/api-error';
 import { useAuth } from '@/src/lib/auth/auth-provider';
 import { colors, radius, spacing } from '@/src/theme';
@@ -164,7 +164,7 @@ export function ChatbotScreen() {
         : item.key === 'cv'
           ? ('/(tabs)/applications' as const)
           : item.key === 'match'
-            ? ('/(tabs)/assistant' as const)
+            ? ('/(tabs)/chatbot' as const)
             : item.key === 'notice'
               ? ('/(tabs)/explore' as const)
               : item.key === 'profile'
