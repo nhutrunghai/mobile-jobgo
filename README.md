@@ -42,7 +42,7 @@ Project này giúp luyện tập:
 ## 🗂️ Cấu trúc thư mục
 
 ```text
-mobile-jobgo/
+jobgo-mobile-app/
 ├── app/          # Route và màn hình chính
 ├── src/          # Source code mở rộng
 ├── hooks/        # Custom hooks
