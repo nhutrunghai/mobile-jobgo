@@ -1,50 +1,114 @@
-# Welcome to your Expo app 👋
+<div align="center">
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# 💼 JobGo Mobile App
 
-## Get started
+### Ứng dụng mobile cho nền tảng tuyển dụng JobGo
 
-1. Install dependencies
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Mobile](https://img.shields.io/badge/Mobile_App-2563EB?style=for-the-badge)
 
-   ```bash
-   npm install
-   ```
+</div>
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🎯 Mục tiêu dự án
 
-In the output, you'll find options to open the app in a
+**JobGo Mobile App** là phiên bản mobile dành cho hệ sinh thái JobGo, tập trung vào trải nghiệm tìm việc và quản lý thông tin tuyển dụng trên điện thoại.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Project này giúp luyện tập:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Xây dựng giao diện mobile bằng React Native
+- Tổ chức màn hình với Expo Router
+- Tách component/hook dùng chung
+- Chuẩn bị nền tảng kết nối với backend JobGo
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🧭 Luồng chức năng hướng tới
 
-```bash
-npm run reset-project
+```text
+👤 Ứng viên đăng nhập / quản lý hồ sơ
+🔎 Tìm kiếm công việc phù hợp
+💼 Xem chi tiết tin tuyển dụng
+❤️ Lưu việc làm quan tâm
+📨 Theo dõi ứng tuyển
+🏢 Xem thông tin công ty tuyển dụng
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🗂️ Cấu trúc thư mục
 
-To learn more about developing your project with Expo, look at the following resources:
+```text
+mobile-jobgo/
+├── app/          # Route và màn hình chính
+├── src/          # Source code mở rộng
+├── hooks/        # Custom hooks
+├── assets/       # Hình ảnh, icon, splash
+├── scripts/      # Script tiện ích
+├── app.json      # Cấu hình Expo
+└── package.json  # Scripts và dependencies
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🛠️ Công nghệ
 
-Join our community of developers creating universal apps.
+| Thành phần | Công nghệ |
+|---|---|
+| Framework | Expo, React Native |
+| Language | TypeScript |
+| Navigation | Expo Router, React Navigation |
+| UI runtime | React Native Gesture Handler, Reanimated |
+| Tooling | ESLint, npm |
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🚀 Chạy dự án
+
+```bash
+npm install
+npx expo start
+```
+
+Sau đó chọn môi trường:
+
+- 📱 Expo Go
+- 🤖 Android Emulator
+- 🍎 iOS Simulator
+- 🌐 Web Browser
+
+---
+
+## 📜 Scripts thường dùng
+
+```bash
+npm run start
+npm run android
+npm run ios
+npm run web
+npm run lint
+```
+
+---
+
+## 📌 Roadmap
+
+- [ ] Hoàn thiện UI danh sách việc làm
+- [ ] Thêm màn hình chi tiết job
+- [ ] Thêm đăng nhập/đăng ký
+- [ ] Kết nối API JobGo backend
+- [ ] Thêm lưu công việc yêu thích
+- [ ] Thêm profile ứng viên
+- [ ] Tối ưu UI/UX mobile
+
+---
+
+<div align="center">
+
+Một mảnh ghép mobile trong hệ sinh thái **JobGo**.  
+Developed by [Nhữ Trung Hải](https://github.com/nhutrunghai)
+
+</div>
